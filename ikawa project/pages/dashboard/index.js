@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
 import Nav from '../../compontents/Layouts/Nav';
 
 export default function componentName() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch("https://ikawa-backend.onrender.com/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        // handle success here
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard/admin';
+
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // handle error here
+      });
+  };
+
+
+  
   return (
     <>
       <Head>
@@ -19,7 +51,7 @@ export default function componentName() {
               src='/images/logo-footer.svg'
               height='90'
               alt='ikawa'
-              class='footer-logo mb--40'
+              className='footer-logo mb--40'
             />
             <h1 className='fw-300 text-white fs--40'>
               Everything you need to know about{' '}
@@ -33,7 +65,7 @@ export default function componentName() {
             <p className='pt--10 text-center'>
               Enjoy all the different features available for you
             </p>
-            <form className='pt--10 pb--10'>
+            <form className='pt--10 pb--10' onSubmit={handleSubmit}>
               <div className='form-group position-relative'>
                 <label htmlFor='email'>Email</label>
                 <input
@@ -42,6 +74,7 @@ export default function componentName() {
                   placeholder='Ex: someone@gmail.com'
                   className='form-control'
                   autoComplete='off'
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className='form-group position-relative'>
@@ -52,11 +85,12 @@ export default function componentName() {
                   placeholder='Min. 8 characters'
                   className='form-control'
                   autoComplete='off'
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className='form-group d-parallel pt--10'>
                 <label className='form-checkbox form-checkbox-primary mb--0'>
-                  <input type='checkbox' name='checkbox' checked />
+                  <input type='checkbox' name='checkbox' defaultChecked />
                   <i></i> <span className='fs--15'>Remember me</span>
                 </label>
                 <Link href='/dashboard/forgot-password' passHref={true}>
@@ -64,9 +98,7 @@ export default function componentName() {
                 </Link>
               </div>
               <div className='form-group position-relative pt--20'>
-                <Link href='/dashboard/admin' passHref>
-                  <button className='btn btn-primary w-100p'>Login</button>
-                </Link>
+                  <button className='btn btn-primary w-100p' type='submit'>Login</button>
               </div>
             </form>
 

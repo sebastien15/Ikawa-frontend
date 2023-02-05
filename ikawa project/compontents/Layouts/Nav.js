@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -6,9 +6,11 @@ import Image from 'next/image';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {getUserData} from '../Dashboard/services/UserDataService';
 
 export default function Nav({ isNavTransparent }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -31,11 +33,51 @@ export default function Nav({ isNavTransparent }) {
 
   const [isMenuShown, toggleMenu] = useState(false);
 
+  //logout function
+  
+  const handleLogout = () => {
+    fetch('https://ikawa-backend.onrender.com/api/v1/auth/logout/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Logout successfully') {
+          localStorage.removeItem('token');
+          // window.location.reload();
+          window.location.href = '/';
+        } else {
+          console.error('Logout failed: ', data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Logout failed: ', error);
+      });
+
+    handleClose()
+  };
+
+  
+  useEffect(() => {
+
+    if( localStorage.getItem('token') != null ){ 
+      setUserData(getUserData())
+      console.log(userData)
+    }
+    console.log(userData)
+    
+  }, [])
+  
+
   return (
     <header
       className={`header no-print ${isNavTransparent ? 'opacity-9' : ''}`}>
       <div className='container'>
         <div className='logo'>
+          
           <img
             src='/images/logo-top.svg'
             alt='user-photo'
@@ -62,12 +104,12 @@ export default function Nav({ isNavTransparent }) {
               </Link>
             ))}
             <Link href='/dashboard' passHref>
-              <button className='btn btn-primary btn-sm fs--15 h-35 mr--20 pl--20 pr--20'>
+              <button className='btn btn-primary btn-sm fs--15 h-35 mr--20 pl--20 pr--20' style={{ display: userData ? 'none' : '' }}>
                 Login
               </button>
             </Link>
           </ul>
-          <div className='position-relative'>
+          <div className='position-relative' style={{ display: userData ? '' : 'none' }}>
             <div
               className='user-details'
               aria-controls='simple-menu'
@@ -85,7 +127,7 @@ export default function Nav({ isNavTransparent }) {
               </div>
               <i className='fi fi-arrow-down text-white ml--15'></i>
             </div>
-            <div className='drop-user-menu'>
+            <div className='drop-user-menu'  >
               <Menu
                 id='simple-menu'
                 anchorEl={anchorEl}
@@ -99,7 +141,7 @@ export default function Nav({ isNavTransparent }) {
                   <Link href='/dashboard/client'>My account</Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>Help</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           </div>
