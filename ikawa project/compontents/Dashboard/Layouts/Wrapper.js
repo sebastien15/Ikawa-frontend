@@ -5,47 +5,17 @@ import PageTitle from '../PageTitle';
 import {getUserData} from '../services/UserDataService';
 import { adminPageTitle } from '../../../data/admin';
 
-// export const adminPageTitle = {
-//   pageTitle: 'Dashboard',
-//   accountHolder: 'Mugabo Francis',
-//   role: 'admin',
-//   imgPath: '/images/user.png',
-// };
-
   
 export default function Wrapper(props) {
   const [userData, setUserData] = useState(null);
 
-  // await getUserData().then( response=>{
-  //   setUserData(response)
-  // })
-  // console.log(user)
-  // useEffect(() => {
-
-  //   // if( localStorage.getItem('token') != null ){ 
-  //     // setUserData(getUserData())
-  //     // console.log(userData)
-  //     // console.log("user data ... wrapper")
-  //     // setUserData({
-  //     //   pageTitle: 'Dashboard',
-  //     //   accountHolder: userData.name,
-  //     //   role: userData.role,
-  //     //   imgPath: '/images/user.png'
-  //     // })
-  //     console.log(getUserData())
-      
-  //   // }
-    
-  // }, [])
 
   useEffect(() => {
 
     const getUser = async () => {
       try {
         const data = await getUserData()
-        // setUserData(data)
-        // console.log(userData)
-
+        
         setUserData({
           pageTitle: 'Dashboard',
           accountHolder: data.name,

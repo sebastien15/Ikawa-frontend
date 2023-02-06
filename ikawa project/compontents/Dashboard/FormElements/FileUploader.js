@@ -14,8 +14,10 @@ export default function FileUploader({
 
   const handleFileUpload = (e) => {
     const selectedFiles = Array.from(e.target.files);
+    console.log(selectedFiles)
     setFileCount(selectedFiles.length);
-    setfileSelected(`(${e.target.files[0].name})`);
+    
+    if(e.target.files.length>0) setfileSelected(`(${e.target.files[0].name})`);
   };
   return (
     <div className={size}>
