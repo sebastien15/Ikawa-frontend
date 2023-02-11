@@ -5,6 +5,7 @@ export default function HugeCardDetails({ data }) {
   return (
     <table className='table table-borderless table-responsive table-sm mb--0'>
       <thead>
+        <tr>
         {data.length > 0
           ? Object.keys(data[0])
               .slice(0, 3)
@@ -14,6 +15,7 @@ export default function HugeCardDetails({ data }) {
                 </th>
               ))
           : ''}
+        </tr>
       </thead>
       <tbody className=''>
         {data.length > 0

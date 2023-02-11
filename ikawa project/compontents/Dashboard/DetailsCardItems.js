@@ -5,6 +5,7 @@ export default function DetailsCardItems({ data }) {
   return (
     <table className='table table-borderless table-sm mb--0'>
       <thead>
+        <tr>
         {data.length > 0
           ? Object.keys(data[0])
               .slice(0, 2)
@@ -14,6 +15,7 @@ export default function DetailsCardItems({ data }) {
                 </th>
               ))
           : ''}
+        </tr>
       </thead>
       <tbody className=''>
         {data.length > 0

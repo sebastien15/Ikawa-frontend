@@ -29,7 +29,6 @@ export default function Wrapper(props) {
     }
 
     getUser();
-    console.log(userData);
   }, [])
   
   

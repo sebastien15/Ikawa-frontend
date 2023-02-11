@@ -65,9 +65,7 @@ export default function Nav({ isNavTransparent }) {
 
     if( localStorage.getItem('token') != null ){ 
       setUserData(getUserData())
-      console.log(userData)
     }
-    console.log(userData)
     
   }, [])
   

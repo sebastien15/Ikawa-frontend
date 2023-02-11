@@ -10,8 +10,6 @@ export const getUserData = async () => {
     });
     
     const userData = await response.json();
-    // console.log("user data called ------------------------------")
-    // console.log(userData);
 
     return userData;
 

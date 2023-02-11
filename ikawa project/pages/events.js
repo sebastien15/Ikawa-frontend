@@ -77,7 +77,7 @@ export default function Events() {
       </Contents>
 
       {loading ? (
-        <Contents pt='0'>Loading...</Contents>
+        <h5 pt='0'>Loading...</h5>
       ) : (
         <Contents pt='0'>
           <div className={`row gutters-lg`}>

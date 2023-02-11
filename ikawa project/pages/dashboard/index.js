@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
 import Nav from '../../compontents/Layouts/Nav';
 
 export default function componentName() {
+  
+  useEffect(() => {
+    // delete expired token
+
+    const currentTime = new Date().getTime();
+    const oneHour = 60 * 60 * 1000; // milliseconds
+    const expirationTime = currentTime + oneHour;
+
+    window.localStorage.setItem('expirationTime', expirationTime);
+
+
+    const storedExpirationTime = window.localStorage.getItem('expirationTime');
+    if (currentTime < storedExpirationTime) {
+      const storedToken = window.localStorage.getItem('token');
+      // use the stored token
+    } else {
+      // token has expired, remove it from local storage
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('expirationTime');
+      // get a new token
+    }
+  }, [])
+  
+  
+
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
