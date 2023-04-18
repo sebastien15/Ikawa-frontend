@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Input from '../FormElements/Input';
 import Button from '../FormElements/Button';
 
 export default function AddNewCoffeeRoaster() {
+  const [roasterName, setroasterName] = useState(null);
+  const [name, setName] = useState(null);
+  const [address, setaddress] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState(null);
+
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      console.log({
+        roasterName,
+        name,
+        address,
+        phone,
+        email
+      })
+    } catch (error) {
+      console.log(error)
+    }
+};
+
   return (
-    <form action='' className='w-100p'>
+    <form action='' className='w-100p' onSubmit={handleSubmit}>
       <div className='row gutter-md'>
         <Input
           type='text'
@@ -15,6 +36,7 @@ export default function AddNewCoffeeRoaster() {
           placeholder='Ex: Roaster name'
           size='col-12 col-md-6'
           bgColor='bg-white'
+          onChange={(e) => setroasterName(e.target.value)}
         />
 
         <Input
@@ -26,6 +48,7 @@ export default function AddNewCoffeeRoaster() {
           placeholder='Ex: John Doe'
           size='col-12 col-md-6'
           bgColor='bg-white'
+          onChange={(e) => setName(e.target.value)}
         />
 
         <Input
@@ -37,6 +60,7 @@ export default function AddNewCoffeeRoaster() {
           placeholder='Ex: Kigali, Rwanda'
           size='col-12 col-md-6'
           bgColor='bg-white'
+          onChange={(e) => setaddress(e.target.value)}
         />
 
         <Input
@@ -48,6 +72,7 @@ export default function AddNewCoffeeRoaster() {
           placeholder='Ex: +250 788 263 325'
           size='col-12 col-md-6'
           bgColor='bg-white'
+          onChange={(e) => setPhone(e.target.value)}
         />
 
         <Input
@@ -59,6 +84,7 @@ export default function AddNewCoffeeRoaster() {
           placeholder='Ex: someone@example.com'
           size='col-12 col-md-6'
           bgColor='bg-white'
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <Button

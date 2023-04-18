@@ -1,21 +1,3 @@
-import axios from 'axios';
-
-export const getAllArticles = async () => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-    };
-    const response = await axios.get("https://ikawa-backend.onrender.com/api/v1/articles/", config);
-    setArticles(response.data.articles);
-    console.log(response.data.articles);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 
 export const addArticle = async (data) => {
   try {

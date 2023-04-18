@@ -4,6 +4,11 @@ import FileUploader from '../FormElements/FileUploader';
 import Button from '../FormElements/Button';
 
 export default function AddNewAnnouncement() {
+  const [shopName, setShopName] = useState(null);
+  const [shopDetails, setshopDetails] = useState(null);
+  const [Location, setLocation] = useState(null);
+  const [Location1, setLocation1] = useState(null);
+  const [contacts, setContacts] = useState(null);
   return (
     <form action='' className='w-100p'>
       <div className='row gutter-md'>
